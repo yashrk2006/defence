@@ -187,17 +187,44 @@ function initializeSwipeGestures() {
         }
     }
 
-    // Mouse wheel navigation
-    let scrollTimeout;
+    // Mouse wheel navigation with improved sensitivity
+    let scrollCooldown = false;
+    let scrollAccumulator = 0;
+    const SCROLL_THRESHOLD = 100; // Increased threshold - requires more scrolling
+    const COOLDOWN_TIME = 800; // Cooldown between slide changes (ms)
+
     container.addEventListener('wheel', (e) => {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
+        // Prevent action if in cooldown
+        if (scrollCooldown) {
+            return;
+        }
+
+        // Accumulate scroll delta
+        scrollAccumulator += Math.abs(e.deltaY);
+
+        // Check if threshold is met
+        if (scrollAccumulator >= SCROLL_THRESHOLD) {
+            // Determine direction and change slide
             if (e.deltaY > 0) {
                 nextSlide();
             } else {
                 previousSlide();
             }
-        }, 150);
+
+            // Reset accumulator and start cooldown
+            scrollAccumulator = 0;
+            scrollCooldown = true;
+
+            // Clear cooldown after delay
+            setTimeout(() => {
+                scrollCooldown = false;
+            }, COOLDOWN_TIME);
+        }
+
+        // Reset accumulator if user stops scrolling
+        setTimeout(() => {
+            scrollAccumulator = 0;
+        }, 200);
     }, { passive: true });
 }
 
