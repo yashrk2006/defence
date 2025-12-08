@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Drone Anomaly Detection Command Center Dashboard">
+    <title>Drone Surveillance Command Center | AI Detection System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <!-- Main Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="24" cy="24" r="8" stroke="url(#logoGradient)" stroke-width="2"
+                            fill="rgba(99, 102, 241, 0.1)" />
+                        <circle cx="12" cy="12" r="4" fill="url(#logoGradient)" />
+                        <circle cx="36" cy="12" r="4" fill="url(#logoGradient)" />
+                        <circle cx="12" cy="36" r="4" fill="url(#logoGradient)" />
+                        <circle cx="36" cy="36" r="4" fill="url(#logoGradient)" />
+                        <line x1="16" y1="16" x2="20" y2="20" stroke="url(#logoGradient)" stroke-width="2" />
+                        <line x1="32" y1="16" x2="28" y2="20" stroke="url(#logoGradient)" stroke-width="2" />
+                        <line x1="16" y1="32" x2="20" y2="28" stroke="url(#logoGradient)" stroke-width="2" />
+                        <line x1="32" y1="32" x2="28" y2="28" stroke="url(#logoGradient)" stroke-width="2" />
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0" y1="0" x2="48" y2="48">
+                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div>
+                        <h1>DroneGuard</h1>
+                        <span>AI Detection</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="live-feed">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    <span>Live Feed</span>
+                </a>
+                <a href="#" class="nav-item" data-view="analytics">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-view="alerts">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                        </path>
+                    </svg>
+                    <span>Alerts</span>
+                    <span class="badge">12</span>
+                </a>
+                <a href="#" class="nav-item" data-view="map">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7">
+                        </path>
+                    </svg>
+                    <span>Map View</span>
+                </a>
+                <a href="#" class="nav-item" data-view="history">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Event History</span>
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <div class="status-item">
+                        <span class="status-dot active"></span>
+                        <span>System Online</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot active"></span>
+                        <span>3 Drones Active</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot active"></span>
+                        <span>AI Model Running</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h2 id="view-title">Live Surveillance Feed</h2>
+                    <div class="breadcrumb">
+                        <span>Dashboard</span>
+                        <span class="separator">/</span>
+                        <span id="breadcrumb-current">Live Feed</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" placeholder="Search events, locations...">
+                    </div>
+                    <button class="icon-button" title="Notifications">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                            </path>
+                        </svg>
+                        <span class="notification-dot"></span>
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Admin User</span>
+                            <span class="user-role">Command Center</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Events Detected</span>
+                        <span class="stat-value" id="events-detected">1,247</span>
+                        <span class="stat-change positive">↑ 12% from yesterday</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Critical Threats</span>
+                        <span class="stat-value" id="critical-threats">24</span>
+                        <span class="stat-change negative">↑ 3 in last hour</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Active Drones</span>
+                        <span class="stat-value" id="active-drones">3</span>
+                        <span class="stat-change neutral">All operational</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Detection Accuracy</span>
+                        <span class="stat-value" id="accuracy">98.7%</span>
+                        <span class="stat-change positive">↑ 0.3% improved</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Views -->
+            <div class="content-views">
+                <!-- Live Feed View -->
+                <div class="content-view active" id="live-feed-view">
+                    <div class="feed-layout">
+                        <div class="video-section">
+                            <div class="video-controls">
+                                <div class="control-group">
+                                    <button class="control-btn active">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5v14l11-7z" />
+                                        </svg>
+                                    </button>
+                                    <button class="control-btn">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                                        </svg>
+                                    </button>
+                                    <span class="time-display" id="current-time">23:04:50</span>
+                                </div>
+                                <div class="control-group">
+                                    <select class="drone-select">
+                                        <option value="1">Drone Alpha - Sector A</option>
+                                        <option value="2">Drone Beta - Sector B</option>
+                                        <option value="3">Drone Gamma - Sector C</option>
+                                    </select>
+                                    <button class="control-btn" title="Fullscreen">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path
+                                                d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="video-feed-container">
+                                <div class="video-feed">
+                                    <div class="feed-overlay">
+                                        <!-- Detection Boxes -->
+                                        <div class="detection-box person"
+                                            style="top: 25%; left: 20%; width: 80px; height: 120px;">
+                                            <span class="detection-label">
+                                                <span class="label-text">PERSON</span>
+                                                <span class="confidence">97%</span>
+                                            </span>
+                                        </div>
+
+                                        <div class="detection-box vehicle"
+                                            style="top: 45%; right: 15%; width: 180px; height: 100px;">
+                                            <span class="detection-label">
+                                                <span class="label-text">VEHICLE</span>
+                                                <span class="confidence">95%</span>
+                                            </span>
+                                        </div>
+
+                                        <div class="detection-box object"
+                                            style="bottom: 20%; left: 35%; width: 60px; height: 60px;">
+                                            <span class="detection-label">
+                                                <span class="label-text">OBJECT</span>
+                                                <span class="confidence">89%</span>
+                                            </span>
+                                        </div>
+
+                                        <!-- Feed Info Overlay -->
+                                        <div class="feed-info-overlay">
+                                            <div class="info-item">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path
+                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                                    </path>
+                                                    <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                <span>28.6139° N, 77.2090° E</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path
+                                                        d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11">
+                                                    </path>
+                                                </svg>
+                                                <span>Altitude: 150m</span>
+                                            </div>
+                                            <div class="info-item">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path
+                                                        d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                                                    </path>
+                                                </svg>
+                                                <span>30 FPS</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="detection-legend">
+                                <span class="legend-item">
+                                    <span class="legend-color" style="background: #ef4444;"></span>
+                                    <span>Person (High Risk)</span>
+                                </span>
+                                <span class="legend-item">
+                                    <span class="legend-color" style="background: #f59e0b;"></span>
+                                    <span>Vehicle (Medium Risk)</span>
+                                </span>
+                                <span class="legend-item">
+                                    <span class="legend-color" style="background: #3b82f6;"></span>
+                                    <span>Object (Low Risk)</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-panel">
+                            <div class="panel-tabs">
+                                <button class="tab-btn active" data-tab="alerts">Alerts</button>
+                                <button class="tab-btn" data-tab="detections">Detections</button>
+                            </div>
+
+                            <div class="tab-content active" id="alerts-tab">
+                                <div class="alerts-list" id="alerts-list">
+                                    <!-- Alerts will be dynamically added here -->
+                                </div>
+                            </div>
+
+                            <div class="tab-content" id="detections-tab">
+                                <div class="detections-list">
+                                    <div class="detection-item">
+                                        <div class="detection-thumbnail person">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                            </svg>
+                                        </div>
+                                        <div class="detection-details">
+                                            <span class="detection-type">Person Detected</span>
+                                            <span class="detection-time">2 min ago</span>
+                                            <span class="detection-confidence">Confidence: 97%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="detection-item">
+                                        <div class="detection-thumbnail vehicle">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M4 16c0 .88.39 1.67 1 2.22V20c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h8v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1.78c.61-.55 1-1.34 1-2.22V6c0-3.5-3.58-4-8-4s-8 .5-8 4v10zm3.5 1c-.83 0-1.5-.67-1.5-1.5S6.67 14 7.5 14s1.5.67 1.5 1.5S8.33 17 7.5 17zm9 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm1.5-6H6V6h12v5z" />
+                                            </svg>
+                                        </div>
+                                        <div class="detection-details">
+                                            <span class="detection-type">Vehicle Tracked</span>
+                                            <span class="detection-time">5 min ago</span>
+                                            <span class="detection-confidence">Confidence: 95%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="detection-item">
+                                        <div class="detection-thumbnail object">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M20 6h-2.18c.11-.31.18-.65.18-1a2.996 2.996 0 00-5.5-1.65l-.5.67-.5-.68C10.96 2.54 10.05 2 9 2 7.34 2 6 3.34 6 5c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H20v6z" />
+                                            </svg>
+                                        </div>
+                                        <div class="detection-details">
+                                            <span class="detection-type">Object Identified</span>
+                                            <span class="detection-time">12 min ago</span>
+                                            <span class="detection-confidence">Confidence: 89%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script src="dashboard.js"></script>
+</body>
+
+</html>

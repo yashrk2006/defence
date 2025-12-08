@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI-Powered Drone Anomaly Detection System - Project Hub">
+    <title>DroneGuard AI | Project Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            color: #f9fafb;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+            z-index: -1;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.5));
+            animation: floatLogo 6s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: clamp(1.125rem, 2vw, 1.5rem);
+            color: #d1d5db;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info {
+            font-size: 1rem;
+            color: #9ca3af;
+            margin-top: 1rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.3);
+            border-color: #6366f1;
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, 0.4);
+        }
+
+        .card-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #f9fafb;
+        }
+
+        .card-description {
+            color: #d1d5db;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .card-features li {
+            padding: 0.5rem 0;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-features li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .card-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+        }
+
+        .card-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .footer p {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .tech-tag {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: #d1d5db;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .header {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-animation"></div>
+
+    <div class="container">
+        <div class="header">
+            <svg class="logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="30" stroke="url(#gradient1)" stroke-width="3"
+                    fill="rgba(99, 102, 241, 0.1)" />
+                <circle cx="50" cy="50" r="15" fill="url(#gradient1)" />
+                <circle cx="150" cy="50" r="15" fill="url(#gradient1)" />
+                <circle cx="50" cy="150" r="15" fill="url(#gradient1)" />
+                <circle cx="150" cy="150" r="15" fill="url(#gradient1)" />
+                <line x1="70" y1="70" x2="85" y2="85" stroke="url(#gradient1)" stroke-width="3" />
+                <line x1="130" y1="70" x2="115" y2="85" stroke="url(#gradient1)" stroke-width="3" />
+                <line x1="70" y1="130" x2="85" y2="115" stroke="url(#gradient1)" stroke-width="3" />
+                <line x1="130" y1="130" x2="115" y2="115" stroke="url(#gradient1)" stroke-width="3" />
+                <defs>
+                    <linearGradient id="gradient1" x1="0" y1="0" x2="200" y2="200">
+                        <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <h1 class="main-title">DroneGuard AI</h1>
+            <p class="subtitle">AI-Powered Drone Anomaly Detection System</p>
+            <p class="project-info">Real-time threat detection for defence surveillance</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Presentation Card -->
+            <div class="project-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2">
+                        </path>
+                    </svg>
+                </div>
+                <h2 class="card-title">Presentation Slides</h2>
+                <p class="card-description">
+                    Interactive 9-slide presentation covering problem statement, solution, architecture, and team
+                    details.
+                </p>
+                <ul class="card-features">
+                    <li>9 Animated Slides</li>
+                    <li>Keyboard Navigation</li>
+                    <li>Touch Gestures</li>
+                    <li>Editable Team Info</li>
+                    <li>Auto-play Mode</li>
+                </ul>
+                <a href="index.html" class="card-button">
+                    View Presentation
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Dashboard Card -->
+            <div class="project-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                </div>
+                <h2 class="card-title">Command Dashboard</h2>
+                <p class="card-description">
+                    Real-time surveillance command center with live detection, alerts, and analytics.
+                </p>
+                <ul class="card-features">
+                    <li>Live Video Feed</li>
+                    <li>Real-time Alerts</li>
+                    <li>AI Detection Boxes</li>
+                    <li>Analytics & Stats</li>
+                    <li>Multi-view Navigation</li>
+                </ul>
+                <a href="dashboard.html" class="card-button">
+                    Open Dashboard
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Prototype Card -->
+            <div class="project-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                </div>
+                <h2 class="card-title">Working Prototype</h2>
+                <p class="card-description">
+                    Standalone prototype demonstration of AI-powered threat detection in action.
+                </p>
+                <ul class="card-features">
+                    <li>Detection Simulation</li>
+                    <li>Bounding Boxes</li>
+                    <li>Confidence Scores</li>
+                    <li>GPS Tracking</li>
+                    <li>Alert System</li>
+                </ul>
+                <a href="prototype.html" class="card-button">
+                    View Prototype
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="tech-tags">
+                <span class="tech-tag">AI/ML</span>
+                <span class="tech-tag">Computer Vision</span>
+                <span class="tech-tag">Real-time Processing</span>
+                <span class="tech-tag">Defence Tech</span>
+                <span class="tech-tag">Surveillance</span>
+            </div>
+            <p style="margin-top: 2rem;">© 2025 DroneGuard AI | AI-Powered Surveillance System</p>
+        </div>
+    </div>
+</body>
+
+</html>
