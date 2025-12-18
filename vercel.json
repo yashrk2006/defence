@@ -1,19 +1,9 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "command-center.html",
-            "use": "@vercel/static"
-        }
-    ],
     "routes": [
         {
             "src": "/",
             "dest": "/command-center.html"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/$1"
         }
     ]
 }
