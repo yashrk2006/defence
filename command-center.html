@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Defence Surveillance Command Center - AI-Powered Drone Anomaly Detection">
+    <title>DEFENCE SURVEILLANCE COMMAND | Tactical Operations Center</title>
+
+    <!-- Professional Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="command-center.css">
+</head>
+
+<body>
+    <!-- Error Banner -->
+    <div id="error-banner" class="error-banner hidden">
+        <div class="error-content">
+            <svg class="error-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            <div class="error-text">
+                <span class="error-title" id="error-title">System Alert</span>
+                <span class="error-message" id="error-message"></span>
+            </div>
+            <button class="error-close" onclick="hideError()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="command-container">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <svg class="logo-icon" viewBox="0 0 50 50" fill="none">
+                        <circle cx="25" cy="25" r="8" stroke="#00FF41" stroke-width="2" />
+                        <circle cx="25" cy="25" r="15" stroke="#00FF41" stroke-width="1" opacity="0.5" />
+                        <circle cx="25" cy="25" r="22" stroke="#00FF41" stroke-width="0.5" opacity="0.3" />
+                        <line x1="25" y1="3" x2="25" y2="13" stroke="#FFB800" stroke-width="2" />
+                        <line x1="25" y1="37" x2="25" y2="47" stroke="#FFB800" stroke-width="2" />
+                        <line x1="3" y1="25" x2="13" y2="25" stroke="#FFB800" stroke-width="2" />
+                        <line x1="37" y1="25" x2="47" y2="25" stroke="#FFB800" stroke-width="2" />
+                    </svg>
+                    <div class="logo-text">
+                        <h1>DEFENCE SURVEILLANCE</h1>
+                        <span>COMMAND CENTER</span>
+                    </div>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- System Status -->
+            <div class="system-status-panel">
+                <div class="status-item">
+                    <span class="status-dot pulse" id="drone-status"></span>
+                    <div class="status-info">
+                        <span class="status-label">DRONE STATUS</span>
+                        <span class="status-value" id="drone-status-text">CONNECTING...</span>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot" id="ai-status"></span>
+                    <div class="status-info">
+                        <span class="status-label">AI ENGINE</span>
+                        <span class="status-value" id="ai-status-text">INITIALIZING...</span>
+                    </div>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot" id="stream-status"></span>
+                    <div class="status-info">
+                        <span class="status-label">STREAM LATENCY</span>
+                        <span class="status-value" id="stream-latency">-- ms</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="live-feed">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span>LIVE FEED</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="#" class="nav-item" data-view="multi-cam">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                    </svg>
+                    <span>MULTI-CAMERA</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="#" class="nav-item" data-view="alerts">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <span>ALERTS</span>
+                    <span class="badge" id="alert-count">0</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="#" class="nav-item" data-view="events">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <span>EVENT LOGS</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="#" class="nav-item" data-view="evidence">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path d="M3 9V7a2 2 0 012-2h14a2 2 0 012 2v2" />
+                        <line x1="9" y1="17" x2="15" y2="17" />
+                    </svg>
+                    <span>EVIDENCE STORAGE</span>
+                    <div class="nav-indicator"></div>
+                </a>
+                <a href="#" class="nav-item" data-view="health">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                    </svg>
+                    <span>SYSTEM HEALTH</span>
+                    <div class="nav-indicator"></div>
+                </a>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="footer-stats">
+                    <div class="footer-stat">
+                        <span class="stat-label">UPTIME</span>
+                        <span class="stat-value" id="uptime">--:--:--</span>
+                    </div>
+                    <div class="footer-stat">
+                        <span class="stat-label">SYSTEM TEMP</span>
+                        <span class="stat-value" id="sys-temp">--°C</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-panel">
+
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <h2 id="current-view-title">LIVE SURVEILLANCE FEED</h2>
+                    <div class="system-time" id="system-time">--:--:--</div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="top-controls">
+                        <button class="top-btn" id="refresh-btn" title="Refresh System">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 4v6h6" />
+                                <path d="M23 20v-6h-6" />
+                                <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15" />
+                            </svg>
+                        </button>
+                        <button class="top-btn" id="settings-btn" title="Settings">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3" />
+                                <path
+                                    d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- CONTENT VIEWS -->
+            <div class="content-area">
+
+                <!-- LIVE FEED VIEW -->
+                <div class="view active" id="view-live-feed">
+                    <div class="feed-container">
+                        <!-- CENTER: Video Feed -->
+                        <div class="video-panel">
+                            <div class="video-header">
+                                <div class="video-header-left">
+                                    <span class="recording-indicator pulse">⬤ LIVE</span>
+                                    <select class="camera-select" id="camera-select">
+                                        <option value="alpha">ALPHA - SECTOR A</option>
+                                        <option value="beta">BETA - SECTOR B</option>
+                                        <option value="gamma">GAMMA - SECTOR C</option>
+                                    </select>
+                                </div>
+                                <div class="video-header-right">
+                                    <button class="video-control-btn" id="toggle-boxes" data-active="true">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="7" height="7" />
+                                            <rect x="14" y="3" width="7" height="7" />
+                                            <rect x="14" y="14" width="7" height="7" />
+                                            <rect x="3" y="14" width="7" height="7" />
+                                        </svg>
+                                        <span>DETECTIONS</span>
+                                    </button>
+                                    <button class="video-control-btn" id="toggle-ir" data-active="false">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="3" />
+                                            <path
+                                                d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24" />
+                                        </svg>
+                                        <span>IR MODE</span>
+                                    </button>
+                                    <button class="video-control-btn" id="fullscreen-btn">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path
+                                                d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="video-feed-wrapper" id="video-wrapper">
+                                <div class="video-feed" id="video-feed">
+                                    <!-- Video/Stream goes here -->
+                                    <video id="stream-video" class="stream-video hidden" autoplay muted></video>
+                                    <canvas id="detection-canvas" class="detection-canvas"></canvas>
+
+                                    <!-- Loading State -->
+                                    <div class="video-loading" id="video-loading">
+                                        <div class="loading-spinner"></div>
+                                        <span>CONNECTING TO STREAM...</span>
+                                    </div>
+
+                                    <!-- Feed Info Overlay -->
+                                    <div class="feed-info-overlay">
+                                        <div class="info-row">
+                                            <span class="info-label">GPS:</span>
+                                            <span class="info-value" id="gps-coords">--</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">ALT:</span>
+                                            <span class="info-value" id="altitude">--</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">FPS:</span>
+                                            <span class="info-value" id="fps-counter">--</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">LATENCY:</span>
+                                            <span class="info-value" id="latency-display">--</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="video-footer">
+                                <div class="detection-legend">
+                                    <span class="legend-item">
+                                        <span class="legend-dot" style="background: #FF0044;"></span>
+                                        <span>HUMAN</span>
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot" style="background: #FFB800;"></span>
+                                        <span>VEHICLE</span>
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot" style="background: #00D9FF;"></span>
+                                        <span>OBJECT</span>
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot" style="background: #FF4500;"></span>
+                                        <span>INTRUSION</span>
+                                    </span>
+                                    <span class="legend-item">
+                                        <span class="legend-dot" style="background: #FF6B00;"></span>
+                                        <span>SMOKE/FIRE</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Intelligence Panel -->
+                        <div class="intel-panel">
+                            <div class="panel-header">
+                                <h3>REAL-TIME INTELLIGENCE</h3>
+                                <button class="clear-alerts-btn" id="clear-alerts-btn">CLEAR</button>
+                            </div>
+
+                            <div class="intel-content" id="alerts-container">
+                                <!-- Alerts will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTTOM: Event Timeline -->
+                    <div class="timeline-panel">
+                        <div class="timeline-header">
+                            <h3>EVENT TIMELINE</h3>
+                            <div class="timeline-filters">
+                                <select class="filter-select" id="filter-type">
+                                    <option value="all">ALL EVENTS</option>
+                                    <option value="human">HUMAN</option>
+                                    <option value="vehicle">VEHICLE</option>
+                                    <option value="intrusion">INTRUSION</option>
+                                    <option value="fire">FIRE/SMOKE</option>
+                                </select>
+                                <select class="filter-select" id="filter-camera">
+                                    <option value="all">ALL CAMERAS</option>
+                                    <option value="alpha">ALPHA</option>
+                                    <option value="beta">BETA</option>
+                                    <option value="gamma">GAMMA</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="timeline-content" id="timeline-events">
+                            <!-- Timeline events will be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MULTI-CAMERA VIEW -->
+                <div class="view" id="view-multi-cam">
+                    <div class="multicam-container">
+                        <div class="multicam-controls">
+                            <div class="control-group">
+                                <label>View Mode:</label>
+                                <select class="cam-mode-select" id="cam-layout">
+                                    <option value="4">4-Grid</option>
+                                    <option value="6">6-Grid</option>
+                                    <option value="9">9-Grid</option>
+                                </select>
+                            </div>
+                            <div class="control-group">
+                                <button class="cam-ctrl-btn" id="sync-all">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15" />
+                                    </svg>
+                                    Sync All
+                                </button>
+                                <button class="cam-ctrl-btn" id="snapshot-all">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="3" />
+                                        <path
+                                            d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" />
+                                    </svg>
+                                    Snapshot All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="multicam-grid" id="multicam-grid">
+                            <!-- CAMERA ALPHA -->
+                            <div class="cam-cell" data-camera="alpha">
+                                <div class="cam-header">
+                                    <div class="cam-title">
+                                        <span class="cam-status pulse"></span>
+                                        ALPHA - SECTOR A
+                                    </div>
+                                    <div class="cam-actions">
+                                        <button class="cam-action-btn" title="Maximize">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="cam-feed">
+                                    <canvas class="cam-canvas" data-cam="alpha"></canvas>
+                                    <div class="cam-overlay">
+                                        <div class="cam-info">
+                                            <span>GPS: 28.6141° N, 77.2090° E</span>
+                                            <span>FPS: 30</span>
+                                        </div>
+                                        <div class="cam-detections" data-cam-detections="alpha">
+                                            <span class="det-badge">🔴 2 Humans</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CAMERA BETA -->
+                            <div class="cam-cell" data-camera="beta">
+                                <div class="cam-header">
+                                    <div class="cam-title">
+                                        <span class="cam-status pulse"></span>
+                                        BETA - SECTOR B
+                                    </div>
+                                    <div class="cam-actions">
+                                        <button class="cam-action-btn" title="Maximize">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="cam-feed">
+                                    <canvas class="cam-canvas" data-cam="beta"></canvas>
+                                    <div class="cam-overlay">
+                                        <div class="cam-info">
+                                            <span>GPS: 28.6155° N, 77.2110° E</span>
+                                            <span>FPS: 30</span>
+                                        </div>
+                                        <div class="cam-detections" data-cam-detections="beta">
+                                            <span class="det-badge">🟡 1 Vehicle</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CAMERA GAMMA -->
+                            <div class="cam-cell" data-camera="gamma">
+                                <div class="cam-header">
+                                    <div class="cam-title">
+                                        <span class="cam-status pulse"></span>
+                                        GAMMA - SECTOR C
+                                    </div>
+                                    <div class="cam-actions">
+                                        <button class="cam-action-btn" title="Maximize">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="cam-feed">
+                                    <canvas class="cam-canvas" data-cam="gamma"></canvas>
+                                    <div class="cam-overlay">
+                                        <div class="cam-info">
+                                            <span>GPS: 28.6130° N, 77.2075° E</span>
+                                            <span>FPS: 30</span>
+                                        </div>
+                                        <div class="cam-detections" data-cam-detections="gamma">
+                                            <span class="det-badge">✅ All Clear</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CAMERA DELTA -->
+                            <div class="cam-cell" data-camera="delta">
+                                <div class="cam-header">
+                                    <div class="cam-title">
+                                        <span class="cam-status pulse"></span>
+                                        DELTA - SECTOR D
+                                    </div>
+                                    <div class="cam-actions">
+                                        <button class="cam-action-btn" title="Maximize">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path
+                                                    d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="cam-feed">
+                                    <canvas class="cam-canvas" data-cam="delta"></canvas>
+                                    <div class="cam-overlay">
+                                        <div class="cam-info">
+                                            <span>GPS: 28.6172° N, 77.2100° E</span>
+                                            <span>FPS: 30</span>
+                                        </div>
+                                        <div class="cam-detections" data-cam-detections="delta">
+                                            <span class="det-badge">🔵 3 Objects</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ALERTS VIEW -->
+                <div class="view" id="view-alerts">
+                    <div class="alerts-management">
+                        <div class="alerts-header">
+                            <h3>🚨 ALERTS MANAGEMENT SYSTEM</h3>
+                            <div class="alerts-stats">
+                                <div class="alert-stat critical-stat">
+                                    <span class="stat-num" id="critical-count">0</span>
+                                    <span class="stat-label">CRITICAL</span>
+                                </div>
+                                <div class="alert-stat warning-stat">
+                                    <span class="stat-num" id="warning-count">0</span>
+                                    <span class="stat-label">WARNING</span>
+                                </div>
+                                <div class="alert-stat info-stat">
+                                    <span class="stat-num" id="info-count">0</span>
+                                    <span class="stat-label">INFO</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alerts-filters">
+                            <select class="alert-filter" id="alert-severity-filter">
+                                <option value="all">All Severities</option>
+                                <option value="critical">Critical Only</option>
+                                <option value="warning">Warning Only</option>
+                                <option value="info">Info Only</option>
+                            </select>
+                            <select class="alert-filter" id="alert-status-filter">
+                                <option value="unacknowledged">Unacknowledged</option>
+                                <option value="all">All Alerts</option>
+                                <option value="acknowledged">Acknowledged</option>
+                            </select>
+                            <button class="alert-action-btn" id="acknowledge-all-btn">
+                                ✓ Acknowledge All
+                            </button>
+                            <button class="alert-action-btn danger" id="clear-all-alerts-btn">
+                                🗑 Clear All
+                            </button>
+                        </div>
+
+                        <div class="alerts-list-full" id="all-alerts-list">
+                            <!-- Sample Alerts -->
+                            <div class="alert-card critical">
+                                <div class="alert-card-header">
+                                    <div class="alert-severity">
+                                        <span class="severity-icon">⚠️</span>
+                                        <span class="severity-text">CRITICAL</span>
+                                    </div>
+                                    <div class="alert-time">2 mins ago</div>
+                                </div>
+                                <div class="alert-card-body">
+                                    <h4 class="alert-title">Unauthorized Intrusion Detected</h4>
+                                    <p class="alert-message">Multiple unauthorized personnel detected in Sector Alpha.
+                                        Immediate response required.</p>
+                                    <div class="alert-meta">
+                                        <span class="meta-item">📍 Sector Alpha</span>
+                                        <span class="meta-item">📹 Camera ALPHA-01</span>
+                                        <span class="meta-item">🎯 Confidence: 98%</span>
+                                    </div>
+                                </div>
+                                <div class="alert-card-actions">
+                                    <button class="alert-btn primary">Acknowledge</button>
+                                    <button class="alert-btn">View Details</button>
+                                    <button class="alert-btn danger">Dismiss</button>
+                                </div>
+                            </div>
+
+                            <div class="alert-card warning">
+                                <div class="alert-card-header">
+                                    <div class="alert-severity">
+                                        <span class="severity-icon">⚡</span>
+                                        <span class="severity-text">WARNING</span>
+                                    </div>
+                                    <div class="alert-time">15 mins ago</div>
+                                </div>
+                                <div class="alert-card-body">
+                                    <h4 class="alert-title">Suspicious Vehicle Movement</h4>
+                                    <p class="alert-message">Unregistered vehicle detected near restricted zone
+                                        perimeter.</p>
+                                    <div class="alert-meta">
+                                        <span class="meta-item">📍 Sector Beta</span>
+                                        <span class="meta-item">📹 Camera BETA-03</span>
+                                        <span class="meta-item">🎯 Confidence: 87%</span>
+                                    </div>
+                                </div>
+                                <div class="alert-card-actions">
+                                    <button class="alert-btn primary">Acknowledge</button>
+                                    <button class="alert-btn">View Details</button>
+                                    <button class="alert-btn danger">Dismiss</button>
+                                </div>
+                            </div>
+
+                            <div class="alert-card info acknowledged">
+                                <div class="alert-card-header">
+                                    <div class="alert-severity">
+                                        <span class="severity-icon">ℹ️</span>
+                                        <span class="severity-text">INFO</span>
+                                    </div>
+                                    <div class="alert-time">1 hour ago</div>
+                                </div>
+                                <div class="alert-card-body">
+                                    <h4 class="alert-title">Authorized Personnel Movement</h4>
+                                    <p class="alert-message">Security patrol team detected in Sector Gamma - Routine
+                                        check.</p>
+                                    <div class="alert-meta">
+                                        <span class="meta-item">📍 Sector Gamma</span>
+                                        <span class="meta-item">📹 Camera GAMMA-02</span>
+                                        <span class="meta-item">✅ Acknowledged by Operator</span>
+                                    </div>
+                                </div>
+                                <div class="alert-card-actions">
+                                    <button class="alert-btn" disabled>Acknowledged</button>
+                                    <button class="alert-btn">View Details</button>
+                                    <button class="alert-btn danger">Dismiss</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EVENT LOGS VIEW -->
+                <div class="view" id="view-events">
+                    <div class="events-database">
+                        <div class="events-header">
+                            <h3>📋 EVENT LOG DATABASE</h3>
+                            <div class="events-search">
+                                <input type="text" class="search-input" id="event-search"
+                                    placeholder="Search events...">
+                                <button class="export-btn" id="export-events">📥 Export CSV</button>
+                            </div>
+                        </div>
+
+                        <div class="events-filters">
+                            <select class="event-filter" id="event-type-filter">
+                                <option value="all">All Types</option>
+                                <option value="detection">Detections</option>
+                                <option value="alert">Alerts</option>
+                                <option value="system">System</option>
+                            </select>
+                            <select class="event-filter" id="event-date-filter">
+                                <option value="today">Today</option>
+                                <option value="week">Last 7 Days</option>
+                                <option value="month">Last 30 Days</option>
+                                <option value="all">All Time</option>
+                            </select>
+                        </div>
+
+                        <div class="events-table-wrapper">
+                            <table class="events-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Type</th>
+                                        <th>Severity</th>
+                                        <th>Description</th>
+                                        <th>Location</th>
+                                        <th>Camera</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="events-tbody">
+                                    <tr class="event-row critical">
+                                        <td>18:46:12</td>
+                                        <td><span class="event-type-badge intrusion">INTRUSION</span></td>
+                                        <td><span class="severity-badge critical">CRITICAL</span></td>
+                                        <td>Unauthorized intrusion detected - Sector Alpha</td>
+                                        <td>28.6141° N, 77.2090° E</td>
+                                        <td>ALPHA-01</td>
+                                        <td><button class="action-btn">Details</button></td>
+                                    </tr>
+                                    <tr class="event-row warning">
+                                        <td>18:42:37</td>
+                                        <td><span class="event-type-badge vehicle">VEHICLE</span></td>
+                                        <td><span class="severity-badge warning">WARNING</span></td>
+                                        <td>Suspicious vehicle movement near perimeter</td>
+                                        <td>28.6155° N, 77.2110° E</td>
+                                        <td>BETA-03</td>
+                                        <td><button class="action-btn">Details</button></td>
+                                    </tr>
+                                    <tr class="event-row info">
+                                        <td>18:35:22</td>
+                                        <td><span class="event-type-badge human">HUMAN</span></td>
+                                        <td><span class="severity-badge info">INFO</span></td>
+                                        <td>Authorized personnel movement logged</td>
+                                        <td>28.6130° N, 77.2075° E</td>
+                                        <td>GAMMA-02</td>
+                                        <td><button class="action-btn">Details</button></td>
+                                    </tr>
+                                    <tr class="event-row info">
+                                        <td>18:28:45</td>
+                                        <td><span class="event-type-badge system">SYSTEM</span></td>
+                                        <td><span class="severity-badge info">INFO</span></td>
+                                        <td>Camera DELTA-04 system check completed</td>
+                                        <td>28.6172° N, 77.2100° E</td>
+                                        <td>DELTA-04</td>
+                                        <td><button class="action-btn">Details</button></td>
+                                    </tr>
+                                    <tr class="event-row warning">
+                                        <td>18:15:08</td>
+                                        <td><span class="event-type-badge object">OBJECT</span></td>
+                                        <td><span class="severity-badge warning">WARNING</span></td>
+                                        <td>Unidentified object detected in restricted zone</td>
+                                        <td>28.6141° N, 77.2090° E</td>
+                                        <td>ALPHA-02</td>
+                                        <td><button class="action-btn">Details</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="events-pagination">
+                            <button class="page-btn">← Previous</button>
+                            <span class="page-info">Page 1 of 24</span>
+                            <button class="page-btn">Next →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EVIDENCE STORAGE VIEW -->
+                <div class="view" id="view-evidence">
+                    <div class="evidence-storage">
+                        <div class="evidence-header">
+                            <h3>📦 EVIDENCE STORAGE & ARCHIVES</h3>
+                            <div class="storage-stats">
+                                <div class="storage-stat">
+                                    <span class="stat-value">2.4 TB</span>
+                                    <span class="stat-label">Used</span>
+                                </div>
+                                <div class="storage-stat">
+                                    <span class="stat-value">1,247</span>
+                                    <span class="stat-label">Files</span>
+                                </div>
+                                <div class="storage-stat">
+                                    <span class="stat-value">327</span>
+                                    <span class="stat-label">Videos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="evidence-filters">
+                            <select class="evidence-filter" id="evidence-type-filter">
+                                <option value="all">All Media Types</option>
+                                <option value="video">Videos</option>
+                                <option value="image">Images</option>
+                                <option value="audio">Audio</option>
+                            </select>
+                            <select class="evidence-filter" id="evidence-date-filter">
+                                <option value="today">Today</option>
+                                <option value="week">Last 7 Days</option>
+                                <option value="month">Last 30 Days</option>
+                            </select>
+                            <button class="upload-btn" id="upload-evidence">⬆️ Upload Evidence</button>
+                        </div>
+
+                        <div class="evidence-grid" id="evidence-grid">
+                            <!-- Video Evidence -->
+                            <div class="evidence-item video">
+                                <div class="evidence-thumbnail">
+                                    <div class="thumb-overlay">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                    <div class="media-type">📹 VIDEO</div>
+                                    <div class="media-duration">04:32</div>
+                                </div>
+                                <div class="evidence-info">
+                                    <h4 class="evidence-title">Sector_Alpha_Intrusion_18-46-12</h4>
+                                    <p class="evidence-meta">Camera ALPHA-01 • 2.4 MB • Critical</p>
+                                    <div class="evidence-actions">
+                                        <button class="ev-btn">▶ Play</button>
+                                        <button class="ev-btn">💾 Download</button>
+                                        <button class="ev-btn">🗑 Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Image Evidence -->
+                            <div class="evidence-item image">
+                                <div class="evidence-thumbnail">
+                                    <div class="thumb-overlay">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                            <circle cx="8.5" cy="8.5" r="1.5" />
+                                            <polyline points="21 15 16 10 5 21" />
+                                        </svg>
+                                    </div>
+                                    <div class="media-type">🖼️ IMAGE</div>
+                                </div>
+                                <div class="evidence-info">
+                                    <h4 class="evidence-title">Vehicle_Detection_18-42-37</h4>
+                                    <p class="evidence-meta">Camera BETA-03 • 856 KB • Warning</p>
+                                    <div class="evidence-actions">
+                                        <button class="ev-btn">👁️ View</button>
+                                        <button class="ev-btn">💾 Download</button>
+                                        <button class="ev-btn">🗑 Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Video Evidence -->
+                            <div class="evidence-item video">
+                                <div class="evidence-thumbnail">
+                                    <div class="thumb-overlay">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                        </svg>
+                                    </div>
+                                    <div class="media-type">📹 VIDEO</div>
+                                    <div class="media-duration">02:15</div>
+                                </div>
+                                <div class="evidence-info">
+                                    <h4 class="evidence-title">Patrol_Routine_18-35-22</h4>
+                                    <p class="evidence-meta">Camera GAMMA-02 • 1.2 MB • Info</p>
+                                    <div class="evidence-actions">
+                                        <button class="ev-btn">▶ Play</button>
+                                        <button class="ev-btn">💾 Download</button>
+                                        <button class="ev-btn">🗑 Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Audio Evidence -->
+                            <div class="evidence-item audio">
+                                <div class="evidence-thumbnail">
+                                    <div class="thumb-overlay">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M9 18V5l12-2v13" />
+                                            <circle cx="6" cy="18" r="3" />
+                                            <circle cx="18" cy="16" r="3" />
+                                        </svg>
+                                    </div>
+                                    <div class="media-type">🎵 AUDIO</div>
+                                    <div class="media-duration">01:08</div>
+                                </div>
+                                <div class="evidence-info">
+                                    <h4 class="evidence-title">Audio_Alert_18-15-08</h4>
+                                    <p class="evidence-meta">Sector Delta • 432 KB • Warning</p>
+                                    <div class="evidence-actions">
+                                        <button class="ev-btn">▶ Play</button>
+                                        <button class="ev-btn">💾 Download</button>
+                                        <button class="ev-btn">🗑 Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SYSTEM HEALTH VIEW -->
+                <div class="view" id="view-health">
+                    <div class="health-monitoring">
+                        <div class="health-header">
+                            <h3>⚡ SYSTEM HEALTH MONITORING</h3>
+                            <div class="system-status-indicator">
+                                <span class="status-pulse green"></span>
+                                <span class="status-text">ALL SYSTEMS OPERATIONAL</span>
+                            </div>
+                        </div>
+
+                        <div class="health-grid-main">
+                            <!-- CPU Usage Card -->
+                            <div class="health-card large">
+                                <div class="health-card-header">
+                                    <h4>🖥️ CPU USAGE</h4>
+                                    <span class="metric-value" id="cpu-usage">45.2%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" style="width: 45%;">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                                <div class="health-details">
+                                    <div class="detail-item">
+                                        <span>Cores:</span>
+                                        <span>8</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Threads:</span>
+                                        <span>16</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Frequency:</span>
+                                        <span>3.6 GHz</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Memory Usage Card -->
+                            <div class="health-card large">
+                                <div class="health-card-header">
+                                    <h4>💾 MEMORY</h4>
+                                    <span class="metric-value" id="memory-usage">12.4 / 32 GB</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" style="width: 38%;">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                                <div class="health-details">
+                                    <div class="detail-item">
+                                        <span>Usage:</span>
+                                        <span>38.8%</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Available:</span>
+                                        <span>19.6 GB</span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span>Cached:</span>
+                                        <span>8.2 GB</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- GPU Temperature Card -->
+                            <div class="health-card">
+                                <div class="health-card-header">
+                                    <h4>🌡️ GPU TEMP</h4>
+                                    <span class="metric-value temp" id="gpu-temp">62°C</span>
+                                </div>
+                                <div class="temp-gauge">
+                                    <div class="gauge-fill" style="height: 62%;"></div>
+                                </div>
+                                <div class="health-status good">NORMAL</div>
+                            </div>
+
+                            <!-- Network Status Card -->
+                            <div class="health-card">
+                                <div class="health-card-header">
+                                    <h4>🌐 NETWORK</h4>
+                                    <span class="metric-value" id="network-status">CONNECTED</span>
+                                </div>
+                                <div class="network-metrics">
+                                    <div class="net-metric">
+                                        <span class="metric-label">↓ Download</span>
+                                        <span class="metric-val">24.8 Mbps</span>
+                                    </div>
+                                    <div class="net-metric">
+                                        <span class="metric-label">↑ Upload</span>
+                                        <span class="metric-val">12.4 Mbps</span>
+                                    </div>
+                                </div>
+                                <div class="health-status good">STABLE</div>
+                            </div>
+
+                            <!-- Storage Card -->
+                            <div class="health-card">
+                                <div class="health-card-header">
+                                    <h4>💿 STORAGE</h4>
+                                    <span class="metric-value">2.4 / 5.0 TB</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar" style="width: 48%;">
+                                        <div class="progress-fill"></div>
+                                    </div>
+                                </div>
+                                <div class="health-status warning">48% USED</div>
+                            </div>
+
+                            <!-- AI Model Status Card -->
+                            <div class="health-card">
+                                <div class="health-card-header">
+                                    <h4>🤖 AI MODEL</h4>
+                                    <span class="metric-value">LOADED</span>
+                                </div>
+                                <div class="ai-metrics">
+                                    <div class="ai-metric">
+                                        <span>Inference:</span>
+                                        <span class="metric-good">32ms</span>
+                                    </div>
+                                    <div class="ai-metric">
+                                        <span>Accuracy:</span>
+                                        <span class="metric-good">98.4%</span>
+                                    </div>
+                                </div>
+                                <div class="health-status good">OPTIMAL</div>
+                            </div>
+                        </div>
+
+                        <!-- System Logs Section -->
+                        <div class="system-logs-section">
+                            <div class="section-header">
+                                <h4>📋 SYSTEM LOGS</h4>
+                                <button class=\"clear-logs-btn\">Clear Logs</button>
+                            </div>
+                            <div class=\"logs-container\">
+                                <div class=\"log-entry info\">
+                                    <span class=\"log-time\">18:46:32</span>
+                                    <span class=\"log-level info\">INFO</span>
+                                    <span class=\"log-message\">AI model inference completed successfully (32ms)</span>
+                                </div>
+                                <div class=\"log-entry success\">
+                                    <span class=\"log-time\">18:45:15</span>
+                                    <span class=\"log-level success\">SUCCESS</span>
+                                    <span class=\"log-message\">Camera ALPHA-01 connection established</span>
+                                </div>
+                                <div class=\"log-entry warning\">
+                                    <span class=\"log-time\">18:43:08</span>
+                                    <span class=\"log-level warning\">WARNING</span>
+                                    <span class=\"log-message\">High GPU temperature detected (78°C)</span>
+                                </div>
+                                <div class=\"log-entry info\">
+                                    <span class=\"log-time\">18:40:22</span>
+                                    <span class=\"log-level info\">INFO</span>
+                                    <span class=\"log-message\">Database backup completed (2.4 TB)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="command-center.js"></script>
+</body>
+
+</html>
