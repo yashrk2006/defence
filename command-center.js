@@ -938,3 +938,42 @@ console.log('  window.commandCenter.addDetection() - Add simulated detection');
 console.log('  window.commandCenter.addAlert() - Add simulated alert');
 console.log('  window.commandCenter.clearTimeline() - Clear timeline');
 console.log('  window.commandCenter.clearAlerts() - Clear alerts');
+
+// ===== LIGHT/DARK MODE TOGGLE =====
+function initializeThemeToggle() {
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+
+    // Check for saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('commandCenterTheme') || 'dark';
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleTheme);
+    }
+}
+
+function toggleTheme() {
+    const body = document.body;
+    const isLightMode = body.classList.contains('light-mode');
+
+    if (isLightMode) {
+        // Switch to dark mode
+        body.classList.remove('light-mode');
+        localStorage.setItem('commandCenterTheme', 'dark');
+        showNotification('Dark Mode Enabled');
+        console.log('🌙 Switched to Dark Mode');
+    } else {
+        // Switch to light mode
+        body.classList.add('light-mode');
+        localStorage.setItem('commandCenterTheme', 'light');
+        showNotification('Light Mode Enabled - Perfect for Presentations!');
+        console.log('☀️ Switched to Light Mode');
+    }
+}
+
+// Initialize theme toggle when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    initializeThemeToggle();
+});

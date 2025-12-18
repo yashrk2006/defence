@@ -15,6 +15,17 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="command-center.css">
+    <style id="light-mode-styles">
+body.light-mode { background: #F5F7FA !important; color: #1F2937 !important; }
+body.light-mode .command-container { background: #F5F7FA !important; }
+body.light-mode .sidebar { background: #FFFFFF !important; }
+body.light-mode .main-panel { background: #F5F7FA !important; }
+body.light-mode .top-bar { background: #FFFFFF !important; }
+body.light-mode .video-panel, body.light-mode .intel-panel, body.light-mode .cam-cell, body.light-mode .health-card, body.light-mode .alert-card, body.light-mode .evidence-item, body.light-mode .events-table, body.light-mode .multicam-controls { background: #FFFFFF !important; }
+body.light-mode h1, body.light-mode h2, body.light-mode h3, body.light-mode h4 { color: #00A832 !important; }
+body.light-mode .nav-item { color: #6B7280 !important; }
+body.light-mode .nav-item.active { color: #00A832 !important; background: rgba(0, 168, 50, 0.08) !important; }
+</style>
 </head>
 
 <body>
@@ -1009,7 +1020,44 @@
 
     </div>
 
-    <script src="command-center.js"></script>
+    <script src="command-center.js"></script><script>
+    // Theme Toggle Functionality - Add this right after command-center.js script tag
+    document.addEventListener('DOMContentLoaded', function () {
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+
+        // Check for saved theme preference or default to dark
+        const savedTheme = localStorage.getItem('commandCenterTheme') || 'dark';
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+        }
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function () {
+                const body = document.body;
+                const isLightMode = body.classList.contains('light-mode');
+
+                if (isLightMode) {
+                    // Switch to dark mode
+                    body.classList.remove('light-mode');
+                    localStorage.setItem('commandCenterTheme', 'dark');
+                    console.log('🌙 Switched to Dark Mode');
+                } else {
+                    // Switch to light mode
+                    body.classList.add('light-mode');
+                    localStorage.setItem('commandCenterTheme', 'light');
+                    console.log('☀️ Switched to Light Mode - Perfect for Presentations!');
+                }
+            });
+
+            console.log('✅ Theme toggle button is ready!');
+        } else {
+            console.error('❌ Theme toggle button not found!');
+        }
+    });
+</script>
+
 </body>
 
 </html>
+
+
