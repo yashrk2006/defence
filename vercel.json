@@ -1,9 +1,4 @@
 {
-    "version": 2,
-    "routes": [
-        {
-            "src": "/",
-            "dest": "/command-center.html"
-        }
-    ]
+    "cleanUrls": true,
+    "trailingSlash": false
 }
